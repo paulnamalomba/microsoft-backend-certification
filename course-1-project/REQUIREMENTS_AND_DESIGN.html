@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>REQUIREMENTS_AND_DESIGN.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///c%3A/Users/kabwe/OneDrive%20-%20University%20of%20Cape%20Town/2025/Work/vscode_md2pdf.css" type="text/css">
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="requirements--design--student-grade-management-system">Requirements &amp; Design — Student Grade Management System</h1>
+<blockquote>
+<p><strong>Course:</strong> Microsoft Back-End Developer Professional Certificate — Course 1<br>
+<strong>Author:</strong> Paul Namalomba<br>
+<strong>Date:</strong> March 02, 2026</p>
+</blockquote>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-requirements">Requirements</a></li>
+<li><a href="#2-design-outline">Design Outline</a></li>
+<li><a href="#3-rubric-coverage-map">Rubric Coverage Map</a></li>
+</ol>
+<hr>
+<h2 id="1-requirements">1. Requirements</h2>
+<h3 id="11-problem-statement">1.1 Problem Statement</h3>
+<p>Lecturers need a lightweight, terminal-based tool to <strong>add students</strong>, <strong>record grades</strong>, <strong>compute averages</strong>, and <strong>assign letter grades</strong> without relying on a database or GUI. The system must be easy to run on any machine with .NET 8 installed.</p>
+<h3 id="12-functional-requirements">1.2 Functional Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-1</td>
+<td>Add a new student (auto-assigned unique integer ID)</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>FR-2</td>
+<td>Record one or more numeric grades (0-100) per student</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>FR-3</td>
+<td>View a single student's details (grades, average, letter grade)</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>FR-4</td>
+<td>View a summary table of all enrolled students</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>FR-5</td>
+<td>Validate that entered grades fall within 0-100</td>
+<td>Must</td>
+</tr>
+<tr>
+<td>FR-6</td>
+<td>Gracefully handle invalid menu choices and non-numeric input</td>
+<td>Should</td>
+</tr>
+<tr>
+<td>FR-7</td>
+<td>Seed demo data on startup for immediate demonstration</td>
+<td>Nice</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-non-functional-requirements">1.3 Non-Functional Requirements</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NFR-1</td>
+<td>Runs as a .NET 8.0 console application (cross-platform)</td>
+</tr>
+<tr>
+<td>NFR-2</td>
+<td>No external NuGet dependencies</td>
+</tr>
+<tr>
+<td>NFR-3</td>
+<td>Clear separation of concerns (model / service / UI)</td>
+</tr>
+<tr>
+<td>NFR-4</td>
+<td>Clean code with XML doc comments</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14-objectives">1.4 Objectives</h3>
+<ol>
+<li>Demonstrate proficiency with <strong>C# control structures</strong> (<code>if-else</code>, <code>switch</code>, <code>while</code>, <code>for</code>, <code>foreach</code>).</li>
+<li>Demonstrate proficiency with <strong>methods</strong> (static helpers, instance methods, parameterised methods with return values).</li>
+<li>Apply <strong>encapsulation</strong> and the single-responsibility principle.</li>
+<li>Produce a working console application that compiles and runs on first attempt.</li>
+</ol>
+<hr>
+<h2 id="2-design-outline">2. Design Outline</h2>
+<h3 id="21-architecture-diagram">2.1 Architecture Diagram</h3>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    subgraph Console UI
+        A[Program.cs]
+    end
+    subgraph Service Layer
+        B[GradeManagerService.cs]
+    end
+    subgraph Domain Model
+        C[Student.cs]
+        D[GradeUtils.cs]
+    end
+
+    A -->|calls| B
+    B -->|manages| C
+    C -->|uses| D
+    A -->|uses| D
+</div></code></pre>
+<h3 id="22-class-diagram">2.2 Class Diagram</h3>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    class Student {
+        +int Id
+        +string Name
+        -List~double~ Grades
+        +AddGrade(double grade) void
+        +GetGrades() IReadOnlyList~double~
+        +GetAverage() double
+        +GetLetterGrade() string
+        +GradeCount int
+        +ToString() string
+    }
+
+    class GradeUtils {
+        <<static>>
+        +ToLetterGrade(double average) string
+        +IsValidGrade(double grade) bool
+    }
+
+    class GradeManagerService {
+        -List~Student~ _students
+        -int _nextId
+        +AddStudent(string name) Student
+        +FindStudent(int id) Student?
+        +AddGrade(int studentId, double grade) bool
+        +GetAllStudents() IReadOnlyList~Student~
+        +StudentCount int
+    }
+
+    class Program {
+        <<top-level statements>>
+        -PrintMenu() void
+        -HandleAddStudent(GradeManagerService) void
+        -HandleAddGrade(GradeManagerService) void
+        -HandleViewStudent(GradeManagerService) void
+        -HandleViewAll(GradeManagerService) void
+        -SeedDemoData(GradeManagerService) void
+    }
+
+    Program --> GradeManagerService : uses
+    GradeManagerService --> Student : manages
+    Student --> GradeUtils : delegates
+    Program --> GradeUtils : validates input
+</div></code></pre>
+<h3 id="23-control-flow--main-menu-loop">2.3 Control Flow — Main Menu Loop</h3>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    Start([Start]) --> Seed[Seed demo data]
+    Seed --> Menu[Print Menu]
+    Menu --> Read[Read user choice]
+    Read --> Switch{switch choice}
+
+    Switch -->|1| AddStudent[HandleAddStudent]
+    Switch -->|2| AddGrade[HandleAddGrade]
+    Switch -->|3| ViewOne[HandleViewStudent]
+    Switch -->|4| ViewAll[HandleViewAll]
+    Switch -->|5| Exit([Exit])
+    Switch -->|other| Invalid[Print error message]
+
+    AddStudent --> Menu
+    AddGrade --> Menu
+    ViewOne --> Menu
+    ViewAll --> Menu
+    Invalid --> Menu
+</div></code></pre>
+<hr>
+<h2 id="3-rubric-coverage-map">3. Rubric Coverage Map</h2>
+<table>
+<thead>
+<tr>
+<th>Rubric Criterion</th>
+<th>Where It Is Demonstrated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Control structures — if / else</strong></td>
+<td><code>GradeUtils.ToLetterGrade()</code>, input validation in <code>Program.cs</code></td>
+</tr>
+<tr>
+<td><strong>Control structures — switch</strong></td>
+<td>Main menu dispatch in <code>Program.cs</code></td>
+</tr>
+<tr>
+<td><strong>Loops — while</strong></td>
+<td>Main program loop in <code>Program.cs</code></td>
+</tr>
+<tr>
+<td><strong>Loops — for</strong></td>
+<td><code>GradeManagerService.FindStudent()</code> iterates with a classic <code>for</code> loop</td>
+</tr>
+<tr>
+<td><strong>Loops — foreach</strong></td>
+<td><code>Student.GetAverage()</code>, <code>HandleViewAll()</code> in <code>Program.cs</code></td>
+</tr>
+<tr>
+<td><strong>Methods — with parameters</strong></td>
+<td>Every handler method accepts <code>GradeManagerService</code>; <code>AddGrade(double)</code></td>
+</tr>
+<tr>
+<td><strong>Methods — with return values</strong></td>
+<td><code>GetAverage() → double</code>, <code>FindStudent() → Student?</code>, <code>IsValidGrade() → bool</code></td>
+</tr>
+<tr>
+<td><strong>Methods — static</strong></td>
+<td>All <code>Program.cs</code> helpers, all <code>GradeUtils</code> methods</td>
+</tr>
+<tr>
+<td><strong>Classes &amp; encapsulation</strong></td>
+<td><code>Student</code> (private grade list), <code>GradeManagerService</code> (private student list)</td>
+</tr>
+<tr>
+<td><strong>Requirements document</strong></td>
+<td>This file — Section 1</td>
+</tr>
+<tr>
+<td><strong>Design outline with diagrams</strong></td>
+<td>This file — Section 2 (Mermaid architecture, class, and flow diagrams)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>End of document.</em></p>
+
+</body>
+</html>
