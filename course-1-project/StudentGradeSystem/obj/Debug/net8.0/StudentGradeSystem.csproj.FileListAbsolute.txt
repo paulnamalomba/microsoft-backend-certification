@@ -1,0 +1,14 @@
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\bin\Debug\net8.0\StudentGradeSystem.exe
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\bin\Debug\net8.0\StudentGradeSystem.deps.json
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\bin\Debug\net8.0\StudentGradeSystem.runtimeconfig.json
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\bin\Debug\net8.0\StudentGradeSystem.dll
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\bin\Debug\net8.0\StudentGradeSystem.pdb
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\obj\Debug\net8.0\StudentGradeSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\obj\Debug\net8.0\StudentGradeSystem.AssemblyInfoInputs.cache
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\obj\Debug\net8.0\StudentGradeSystem.AssemblyInfo.cs
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\obj\Debug\net8.0\StudentGradeSystem.csproj.CoreCompileInputs.cache
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\obj\Debug\net8.0\StudentGradeSystem.dll
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\obj\Debug\net8.0\refint\StudentGradeSystem.dll
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\obj\Debug\net8.0\StudentGradeSystem.pdb
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\obj\Debug\net8.0\StudentGradeSystem.genruntimeconfig.cache
+C:\Users\kabwe\OneDrive\Desktop\microsoft-backend-certification\course-1-project\StudentGradeSystem\obj\Debug\net8.0\ref\StudentGradeSystem.dll
