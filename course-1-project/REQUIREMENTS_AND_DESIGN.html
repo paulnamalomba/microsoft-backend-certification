@@ -485,48 +485,48 @@ code {
 </div></code></pre>
 <h3 id="22-class-diagram">2.2 Class Diagram</h3>
 <pre><code class="language-mermaid"><div class="mermaid">classDiagram
-    class Student {
-        +int Id
-        +string Name
-        -List~double~ Grades
-        +AddGrade(double grade) void
-        +GetGrades() IReadOnlyList~double~
-        +GetAverage() double
-        +GetLetterGrade() string
-        +GradeCount int
-        +ToString() string
-    }
+	class Student {
+		+int Id
+		+string Name
+		-List~double~ Grades
+		+AddGrade(grade)
+		+GetGrades()
+		+GetAverage()
+		+GetLetterGrade()
+		+int GradeCount
+		+ToString()
+	}
 
-    class GradeUtils {
-        <<static>>
-        +ToLetterGrade(double average) string
-        +IsValidGrade(double grade) bool
-    }
+	class GradeUtils {
+		<<static>>
+		+ToLetterGrade(average)
+		+IsValidGrade(grade)
+	}
 
-    class GradeManagerService {
-        -List~Student~ _students
-        -int _nextId
-        +AddStudent(string name) Student
-        +FindStudent(int id) Student?
-        +AddGrade(int studentId, double grade) bool
-        +GetAllStudents() IReadOnlyList~Student~
-        +StudentCount int
-    }
+	class GradeManagerService {
+		-List~Student~ _students
+		-int _nextId
+		+AddStudent(name)
+		+FindStudent(id)
+		+AddGrade(studentId, grade)
+		+GetAllStudents()
+		+int StudentCount
+	}
 
-    class Program {
-        <<top-level statements>>
-        -PrintMenu() void
-        -HandleAddStudent(GradeManagerService) void
-        -HandleAddGrade(GradeManagerService) void
-        -HandleViewStudent(GradeManagerService) void
-        -HandleViewAll(GradeManagerService) void
-        -SeedDemoData(GradeManagerService) void
-    }
+	class Program {
+		<<static>>
+		-PrintMenu()
+		-HandleAddStudent(service)
+		-HandleAddGrade(service)
+		-HandleViewStudent(service)
+		-HandleViewAll(service)
+		-SeedDemoData(service)
+	}
 
-    Program --> GradeManagerService : uses
-    GradeManagerService --> Student : manages
-    Student --> GradeUtils : delegates
-    Program --> GradeUtils : validates input
+	Program --> GradeManagerService : uses
+	GradeManagerService --> Student : manages
+	Student --> GradeUtils : delegates
+	Program --> GradeUtils : validates input
 </div></code></pre>
 <h3 id="23-control-flow--main-menu-loop">2.3 Control Flow — Main Menu Loop</h3>
 <pre><code class="language-mermaid"><div class="mermaid">flowchart TD

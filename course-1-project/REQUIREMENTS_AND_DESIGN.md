@@ -81,38 +81,38 @@ classDiagram
         +int Id
         +string Name
         -List~double~ Grades
-        +AddGrade(double grade) void
-        +GetGrades() IReadOnlyList~double~
-        +GetAverage() double
-        +GetLetterGrade() string
-        +GradeCount int
-        +ToString() string
+        +AddGrade(grade)
+        +GetGrades()
+        +GetAverage()
+        +GetLetterGrade()
+        +int GradeCount
+        +ToString()
     }
 
     class GradeUtils {
         <<static>>
-        +ToLetterGrade(double average) string
-        +IsValidGrade(double grade) bool
+        +ToLetterGrade(average)
+        +IsValidGrade(grade)
     }
 
     class GradeManagerService {
         -List~Student~ _students
         -int _nextId
-        +AddStudent(string name) Student
-        +FindStudent(int id) Student?
-        +AddGrade(int studentId, double grade) bool
-        +GetAllStudents() IReadOnlyList~Student~
-        +StudentCount int
+        +AddStudent(name)
+        +FindStudent(id)
+        +AddGrade(studentId, grade)
+        +GetAllStudents()
+        +int StudentCount
     }
 
     class Program {
-        <<top-level statements>>
-        -PrintMenu() void
-        -HandleAddStudent(GradeManagerService) void
-        -HandleAddGrade(GradeManagerService) void
-        -HandleViewStudent(GradeManagerService) void
-        -HandleViewAll(GradeManagerService) void
-        -SeedDemoData(GradeManagerService) void
+        <<static>>
+        -PrintMenu()
+        -HandleAddStudent(service)
+        -HandleAddGrade(service)
+        -HandleViewStudent(service)
+        -HandleViewAll(service)
+        -SeedDemoData(service)
     }
 
     Program --> GradeManagerService : uses
